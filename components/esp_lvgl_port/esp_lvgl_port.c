@@ -679,16 +679,12 @@ static void lvgl_port_touchpad_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *
     uint8_t touchpad_cnt = 0;
 
     /* Read data from touch controller into memory */
-    if (touch_ctx->handle->config.interrupt_callback && touch_ctx->handle->config.user_data)
-    {
+    if (touch_ctx->handle->config.interrupt_callback && touch_ctx->handle->config.user_data) {
         SemaphoreHandle_t * touch_mux = (SemaphoreHandle_t *) touch_ctx->handle->config.user_data;
-        if (xSemaphoreTakeFromISR(*touch_mux, 0) == pdTRUE) 
-        {
+        if (xSemaphoreTakeFromISR(*touch_mux, 0) == pdTRUE) {
             esp_lcd_touch_read_data(touch_ctx->handle);
         }
-    }
-    else
-    {
+    } else {
         esp_lcd_touch_read_data(touch_ctx->handle);
     }
 
